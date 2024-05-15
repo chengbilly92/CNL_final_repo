@@ -15,4 +15,3 @@ else:
     st.title(f'Hello:\tGuest.')
 
 st.text(f'Your ip address: {get_remote_ip()}')
-
