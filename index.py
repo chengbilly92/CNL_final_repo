@@ -14,5 +14,5 @@ if 'login' in st.session_state:
 else:
     st.title(f'Hello:\tGuest.')
 
-st.write(f'Your ip address: {get_remote_ip()}')
+st.text(f'Your ip address: {get_remote_ip()}')
 

@@ -18,7 +18,7 @@ def main()-> None:
         content = ''
     res: list[tuple] = cur.execute('SELECT * FROM messages;')
     for m in res:
-        st.write(f'{m[0]}: {m[1]}')
+        st.text(f'{m[0]}: {m[1]}')
     
 
 if 'login' in st.session_state and st.session_state['login']:
