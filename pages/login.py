@@ -4,7 +4,7 @@ import sqlite3
 def checkLogin(username: str, password: str)-> None:
     con = sqlite3.Connection('user.db')
     cur: sqlite3.Cursor = con.cursor()
-    res = cur.execute(f'SELECT password FROM users WHERE username = "{username}";')
+    res = cur.execute('SELECT password FROM users WHERE username = ?;', (username,))
 
     if password == res.fetchone()[0]:
         st.success("Login successful!")

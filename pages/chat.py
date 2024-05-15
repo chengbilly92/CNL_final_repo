@@ -13,7 +13,7 @@ def main()-> None:
     cur: sqlite3.Cursor = con.cursor()
     content: str = st.text_input("Say something!!")
     if content:
-        cur.execute(f'INSERT INTO messages VALUES (\"{st.session_state["login"]}\", "{content}", {time.time()})')
+        cur.execute('INSERT INTO messages VALUES (?, ?, ?)', (st.session_state["login"], content, time.time(),))
         con.commit()
         content = ''
     res: list[tuple] = cur.execute('SELECT * FROM messages;')

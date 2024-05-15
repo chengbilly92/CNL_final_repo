@@ -4,7 +4,7 @@ import sqlite3
 def register(username: str, password: str)-> None:
     con = sqlite3.Connection('user.db')
     cur: sqlite3.Cursor = con.cursor()
-    cur.execute(f'INSERT INTO users(username, password) VALUES ("{username}", "{password}");')
+    cur.execute('INSERT INTO users(username, password) VALUES (?, ?);', (username, password,))
     con.commit()
 
     st.success("Successfully registered!")
