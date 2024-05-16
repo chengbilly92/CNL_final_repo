@@ -1,13 +1,20 @@
 import streamlit as st
 import sqlite3
+import traceback
 
 def register(username: str, password: str)-> None:
-    con = sqlite3.Connection('user.db')
-    cur: sqlite3.Cursor = con.cursor()
-    cur.execute(f'INSERT INTO users(username, password) VALUES ("{username}", "{password}");')
-    con.commit()
-
-    st.success("Successfully registered!")
+    try:
+        con = sqlite3.Connection('user.db')
+        cur: sqlite3.Cursor = con.cursor()
+        cur.execute('INSERT INTO users(username, password) VALUES (?, ?);', (username, password,))
+        con.commit()
+        st.success("Successfully registered!")
+    except:
+        traceback.print_exc()
+        st.error("Register Failed!")
+    finally:
+        con.close()
+    
 
 def main()-> None:
     username = st.text_input("Username")
