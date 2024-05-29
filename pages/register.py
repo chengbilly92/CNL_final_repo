@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 import traceback
+import utils
 
 def register(username: str, password: str)-> None:
     try:
@@ -19,6 +20,7 @@ def register(username: str, password: str)-> None:
         con.close()
     
 def main()-> None:
+    utils.set_sidebar()
     if 'tologin' in st.session_state:
         del st.session_state['tologin']
         st.switch_page('index.py')

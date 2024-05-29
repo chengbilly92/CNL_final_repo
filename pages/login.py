@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 import traceback
+import utils
 
 def check_login(username: str, password: str)-> None:
     try:
@@ -20,6 +21,7 @@ def check_login(username: str, password: str)-> None:
         con.close()
 
 def main():
+    utils.set_sidebar()
     if 'login' in st.session_state:
         st.switch_page('index.py')
     st.title("Simple Login Page")

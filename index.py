@@ -3,8 +3,7 @@ from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 import requests
-import st_pages
-from st_pages import Page
+import utils
 
 def get_remote_ip() -> str:
     ctx = get_script_run_ctx()
@@ -27,25 +26,8 @@ def get_ip_info(user_ip: str)-> dict:
     r: requests.Response = requests.get(f'http://ip-api.com/json/{user_ip}')
     return r.json()
 
-def set_sidebar()-> None:
-    if 'login' in st.session_state: 
-        st_pages.show_pages([
-            Page('index.py', 'Home'),
-            Page('pages/chat.py', 'Chat'),
-            Page('pages/logout.py', 'Log Out'),
-            Page('pages/changePassword.py', 'Change Password')
-        ])
-        st_pages.hide_pages(["Another page"])
-    else:
-        st_pages.show_pages([
-            Page('index.py', 'Home'),
-            Page('pages/register.py', 'Sign up'),
-            Page('pages/login.py', 'Log In')
-        ])
-        st_pages.hide_pages(["Another page"])
-
 def main()-> None:
-    set_sidebar()
+    utils.set_sidebar()
     if 'login' in st.session_state: 
         st.title(f'Hello:\t{st.session_state["login"]}.')
     else:

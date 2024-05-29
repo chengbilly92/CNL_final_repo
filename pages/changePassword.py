@@ -1,6 +1,8 @@
 import streamlit as st
 import sqlite3
 import traceback
+import utils
+
 def get_stored_password(username):
     con = sqlite3.connect('user.db')
     cur: sqlite3.Cursor = con.cursor()
@@ -41,7 +43,9 @@ def change_password(username, old_password, new_password):
         update_password(username, new_password)
     else:
         st.error("The original password is incorrect.")
+        
 def main()-> None:
+    utils.set_sidebar()
     if 'tologin' in st.session_state:
         del st.session_state['tologin']
         del st.session_state['login']

@@ -3,6 +3,7 @@ import sqlite3
 import traceback
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
+import utils
 
 @st.experimental_dialog("Please log in")
 def login_fail()-> None:
@@ -11,6 +12,7 @@ def login_fail()-> None:
         st.switch_page('pages/login.py')
 
 def main()-> None:
+    utils.set_sidebar()
     st_autorefresh(1000)
     try:
         con = sqlite3.Connection('user.db')
