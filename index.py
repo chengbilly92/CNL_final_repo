@@ -32,7 +32,8 @@ def set_sidebar()-> None:
         st_pages.show_pages([
             Page('index.py', 'Home'),
             Page('pages/chat.py', 'Chat'),
-            Page('pages/logout.py', 'Log Out')
+            Page('pages/logout.py', 'Log Out'),
+            Page('pages/changePassword.py', 'Change Password')
         ])
         st_pages.hide_pages(["Another page"])
     else:
@@ -59,3 +60,4 @@ def main()-> None:
 
 if __name__ == "__main__":
     main()
+
