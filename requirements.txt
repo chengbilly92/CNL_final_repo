@@ -1,1 +1,2 @@
 st-pages == 0.4.5
+streamlit-autorefresh == 1.0.1
