@@ -2,6 +2,7 @@ import streamlit as st
 import sqlite3
 import traceback
 from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 
 @st.experimental_dialog("Please log in")
 def login_fail()-> None:
@@ -10,6 +11,7 @@ def login_fail()-> None:
         st.switch_page('pages/login.py')
 
 def main()-> None:
+    st_autorefresh(1000)
     try:
         con = sqlite3.Connection('user.db')
         cur: sqlite3.Cursor = con.cursor()
@@ -26,6 +28,7 @@ def main()-> None:
         
         res: list[tuple] = cur.execute('SELECT * FROM messages;')
         for m in res:
+            
             st.text(f'{m[0]}({m[1]}): {m[2]}')
     except:
         traceback.print_exc()

@@ -10,6 +10,8 @@ def register(username: str, password: str)-> None:
         con.commit()
         st.success("Successfully registered!")
         st.session_state['tologin'] = True
+    except sqlite3.IntegrityError as err:
+        st.error('Username have been used')
     except:
         traceback.print_exc()
         st.error("Register Failed!")
