@@ -4,7 +4,6 @@ import os
 import random
 import st_pages
 from st_pages import Page
-from googletrans import Translator
 import base64
 
 def country_to_language(country):
@@ -24,6 +23,8 @@ f = open("text.txt", "r")
 before = f.read()
 print(translate_string_with_country(before, "China"))
 '''
+
+support_country = ["Taiwan", "South Korea", "Spain", "Russia", "Japan", "Italy", "France", "China"]
 
 IPfrom = {'unknown': 'connecting from ', 'Taiwan': '連線位址: ', 'China': '链接来自: ', 'France': 'Connexion de ', 'Italy': 'Connessione da: ', 'South Korea': '연결:', 'Spain': 'Conectando de ', 'Japan': '接続: ', 'Russia': 'Подключение: '}
 Password = {'unknown': 'password', 'Taiwan' : '密碼', 'China' : '密码', 'France' : 'Mot de passe', 'Italy' : 'Password', 'South Korea' : '비밀', 'Spain' : 'Contrasenya', 'Japan' : 'パスワード', 'Russia' : 'Пароль'}

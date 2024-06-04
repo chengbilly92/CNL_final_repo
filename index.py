@@ -43,13 +43,14 @@ def main()-> None:
     if user_ip_info['status'] == "success":
         st.write(f'Your country: {user_ip_info["country"]}')
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
-    # st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
-    st.session_state["country"] = "France"
+    st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
+    if st.session_state["country"] not in utils.support_country:
+        st.session_state["country"] = "unknown"
     if 'login' in st.session_state: 
-        st.title(f'{utils.Hello[st.session_state['country']]}:\t{st.session_state["login"]}.')
+        st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}.')
     else:
-        st.title(f'{utils.Hello[st.session_state['country']]}:\tGuest.')
-    st.text(f'{utils.IPfrom[st.session_state['country']]} {user_ip}')
+        st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest.')
+    st.text(f'{utils.IPfrom[st.session_state["country"]]} {user_ip}')
     st.session_state["language"] = utils.country_to_language(st.session_state["country"])
     # newPath = "./image/{}".format(st.session_state["country"])
     # if not os.path.exists(newPath):
