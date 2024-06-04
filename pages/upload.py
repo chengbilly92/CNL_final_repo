@@ -1,8 +1,5 @@
 import streamlit as st
-import sqlite3
-import traceback
 import utils
-import pandas as pd
 from PIL import Image
 import os
 
@@ -30,8 +27,6 @@ def main()-> None:
         with open(os.path.join(newPath,image_file.name), "wb") as f: 
           f.write(image_file.getbuffer())
         st.success("Saved File")
-
-    # st.button('change', on_click=lambda: change_password(st.session_state.login, oldPassword, password))
 
 if __name__ == "__main__":
     main()
