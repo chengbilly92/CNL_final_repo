@@ -2,18 +2,16 @@ import streamlit as st
 import sqlite3
 import traceback
 from datetime import datetime
-from streamlit_autorefresh import st_autorefresh
 import utils
+import signal
 
-@st.experimental_dialog("Please log in")
-def login_fail()-> None:
-    b: bool = st.button("Go to log in page")
-    if b:
-        st.switch_page('pages/login.py')
+def handler(signum, frame):
+    st.rerun()
 
 def main()-> None:
     utils.set_sidebar()
-    st_autorefresh(1000)
+    signal
+    signal.alarm(3)
     try:
         con = sqlite3.Connection('user.db')
         cur: sqlite3.Cursor = con.cursor()
@@ -30,7 +28,6 @@ def main()-> None:
         
         res: list[tuple] = cur.execute('SELECT * FROM messages;')
         for m in res:
-            
             st.text(f'{m[0]}({m[1]}): {m[2]}')
     except:
         traceback.print_exc()
@@ -41,4 +38,4 @@ def main()-> None:
 if 'login' in st.session_state and st.session_state['login']:
     main()
 else: 
-    login_fail()
+    st.switch_page('index.py')
