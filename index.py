@@ -1,13 +1,10 @@
 import streamlit as st
 from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
-from streamlit.runtime.state import session_state
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 import requests
 import utils
 from PIL import Image
-import os
-import random
 
 @st.cache_data
 def load_image(image_file):
@@ -37,11 +34,10 @@ def get_ip_info(user_ip: str)-> dict:
 
 def main()-> None:
     utils.set_sidebar()
+    first_reload: bool = (st.session_state["country"] == "unknown")
     user_ip: str = get_forwarded_ip()
     user_ip_info: dict = get_ip_info(user_ip)
     print(user_ip_info['status'])
-    if user_ip_info['status'] == "success":
-        st.write(f'Your country: {user_ip_info["country"]}')
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
     st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
     if st.session_state["country"] not in utils.support_country:
@@ -50,20 +46,12 @@ def main()-> None:
         st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}.')
     else:
         st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest.')
+    if user_ip_info['status'] == "success":
+        st.write(f'Your country: {user_ip_info["country"]}')
     st.text(f'{utils.IPfrom[st.session_state["country"]]} {user_ip}')
     st.session_state["language"] = utils.country_to_language(st.session_state["country"])
-    # newPath = "./image/{}".format(st.session_state["country"])
-    # if not os.path.exists(newPath):
-    #     os.makedirs(newPath)
-    # filePath = "./image/{}".format(st.session_state['country'])
-    # files = os.listdir(filePath)
-    # if len(files) == 0:
-    #     st.text("No images for your country.")
-    # else:
-    #     image_file = random.choice(files)
-    #     img = load_image(filePath+"/"+image_file)
-    #     st.image(img)
-
+    if first_reload and  st.session_state["country"] != "unknown":
+        st.rerun()
 
 if __name__ == "__main__":
     main()
