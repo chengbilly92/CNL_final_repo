@@ -23,7 +23,7 @@ def check_login(username: str, password: str)-> None:
 
 def main():
     utils.set_sidebar()
-    st.title("Simple Login Page")
+    st.title(utils.LogIn[st.session_state['country']])
 
     with st.form('loginform'):
         username = st.text_input("Username")

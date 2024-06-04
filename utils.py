@@ -25,6 +25,7 @@ before = f.read()
 print(translate_string_with_country(before, "China"))
 '''
 
+ChangeLanguage = {"unknown" : "Change Language", "Taiwan" : "改變語言", "China" : "上载图像", "France" : "Uploader l'image", "Italy" : "Carica immagine", "South Korea" : "이메일", "Spain" : "Cargar imagen", "Japan" : "写真をアップロード", "Russia" : "Загрузить фото"}
 Home = {"unknown" : "Home", "Taiwan" : "首頁", "China" : "首页", "France" : "Accueil", "Italy" : "Casa", "South Korea" : "홀", "Spain" : "Casa", "Japan" : "ホーム", "Russia" : "Главная"}
 Chat = {"unknown" : "Chat", "Taiwan" : "聊天室", "China" : "聊天室", "France" : "Chat", "Italy" : "Chat", "South Korea" : "Chat", "Spain" : "Chat", "Japan" : "チャット", "Russia" : "Чат"}
 SignUp = {"unknown" : "Sign up", "Taiwan" : "註冊", "China" : "注册", "France" : "s'inscrire", "Italy" : "Registrati", "South Korea" : "가입", "Spain" : "Registrarse", "Japan" : "サインアップ", "Russia" : "Регистрация"}
