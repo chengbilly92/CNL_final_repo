@@ -3,7 +3,7 @@ import utils
 
 def main() -> None:
     utils.set_sidebar()
-    st.title('Change password')
+    st.title(utils.ChangeLanguage[st.session_state['conuntry']])
     language = st.radio("",[
         "auto", ":flag-us: English", ":flag-jp: 日本語", 
         ":flag-tw: 繁體中文",

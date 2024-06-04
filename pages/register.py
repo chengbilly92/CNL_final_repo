@@ -24,7 +24,7 @@ def register(username: str, password: str)-> None:
     
 def main()-> None:
     utils.set_sidebar()
-    st.title('Sign up')
+    st.title(st.session_state['country'])
 
     with st.form("signupform"):
         username = st.text_input("Username")
