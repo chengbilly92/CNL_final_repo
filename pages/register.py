@@ -27,9 +27,9 @@ def main()-> None:
     st.title(st.session_state['country'])
 
     with st.form("signupform"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submited = st.form_submit_button('register')
+        username = st.text_input(utils.Username[st.session_state['country']])
+        password = st.text_input(utils.Password[st.session_state['country']], type="password")
+        submited = st.form_submit_button(utils.SignUp[st.session_state['country']])
         if submited:
             try:
                 con = sqlite3.Connection('user.db')

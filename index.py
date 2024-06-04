@@ -37,30 +37,31 @@ def get_ip_info(user_ip: str)-> dict:
 
 def main()-> None:
     utils.set_sidebar()
-    if 'login' in st.session_state: 
-        st.title(f'Hello:\t{st.session_state["login"]}.')
-    else:
-        st.title(f'Hello:\tGuest.')
     user_ip: str = get_forwarded_ip()
-    st.text(f'Your ip address: {user_ip}')
     user_ip_info: dict = get_ip_info(user_ip)
     print(user_ip_info['status'])
     if user_ip_info['status'] == "success":
         st.write(f'Your country: {user_ip_info["country"]}')
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
-    st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
-    st.session_state["language"] = utils.country_to_language(st.session_state["country"])
-    newPath = "./image/{}".format(st.session_state["country"])
-    if not os.path.exists(newPath):
-        os.makedirs(newPath)
-    filePath = "./image/{}".format(st.session_state['country'])
-    files = os.listdir(filePath)
-    if len(files) == 0:
-        st.text("No images for your country.")
+    # st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
+    st.session_state["country"] = "France"
+    if 'login' in st.session_state: 
+        st.title(f'{utils.Hello[st.session_state['country']]}:\t{st.session_state["login"]}.')
     else:
-        image_file = random.choice(files)
-        img = load_image(filePath+"/"+image_file)
-        st.image(img)
+        st.title(f'{utils.Hello[st.session_state['country']]}:\tGuest.')
+    st.text(f'{utils.IPfrom[st.session_state['country']]} {user_ip}')
+    st.session_state["language"] = utils.country_to_language(st.session_state["country"])
+    # newPath = "./image/{}".format(st.session_state["country"])
+    # if not os.path.exists(newPath):
+    #     os.makedirs(newPath)
+    # filePath = "./image/{}".format(st.session_state['country'])
+    # files = os.listdir(filePath)
+    # if len(files) == 0:
+    #     st.text("No images for your country.")
+    # else:
+    #     image_file = random.choice(files)
+    #     img = load_image(filePath+"/"+image_file)
+    #     st.image(img)
 
 
 if __name__ == "__main__":
