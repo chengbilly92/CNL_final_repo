@@ -12,8 +12,15 @@ for folder in */; do
         fi
     done
     
+    for file in *.jpg; do
+        if [ -f "$file" ]; then
+            convert "$file" "$(basename "$file" .jpg).png"
+        fi
+    done
+    
     # 刪除所有剩餘的jpeg檔案
     rm -f *.jpeg
+    rm -f *.jpg
     
     # 返回上一層資料夾
     cd ..
