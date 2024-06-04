@@ -2,7 +2,8 @@ import streamlit as st
 import st_pages
 from st_pages import Page
 from googletrans import Translator
-def translate_string_with_country(string, country):
+
+def country_to_language(country):
     country_to_lang = {"Taiwan": "zh-tw",
                        "China": "zh-cn",
                        "France": "fr",
@@ -11,10 +12,8 @@ def translate_string_with_country(string, country):
                        "Spain": "es",
                        "Japan": "ja",
                        "Russia": "ru"}
-    translator = Translator()
     lang = country_to_lang.get(country, "en")
-    after = translator.translate(string, dest = lang).text
-    return after
+    return lang
 
 '''usage
 f = open("text.txt", "r")

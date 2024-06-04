@@ -7,7 +7,7 @@ from googletrans import Translator
 
 def main()-> None:
     utils.set_sidebar()
-    language = 'en'
+    language = st.session_state['language']
     translator = Translator()
     message = str()
     try:

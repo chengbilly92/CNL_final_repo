@@ -49,6 +49,7 @@ def main()-> None:
         st.write(f'Your country: {user_ip_info["country"]}')
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
     st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
+    st.session_state["language"] = utils.country_to_language(st.session_state["country"])
     newPath = "./image/{}".format(st.session_state["country"])
     if not os.path.exists(newPath):
         os.makedirs(newPath)
