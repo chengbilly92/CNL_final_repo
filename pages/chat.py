@@ -3,15 +3,9 @@ import sqlite3
 import traceback
 from datetime import datetime
 import utils
-import signal
-
-def handler(signum, frame):
-    st.rerun()
 
 def main()-> None:
     utils.set_sidebar()
-    signal
-    signal.alarm(3)
     try:
         con = sqlite3.Connection('user.db')
         cur: sqlite3.Cursor = con.cursor()
