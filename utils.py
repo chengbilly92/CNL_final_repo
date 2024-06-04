@@ -2,7 +2,9 @@ import streamlit as st
 import st_pages
 from st_pages import Page
 from googletrans import Translator
-def translate_string_with_country(string, country):
+import base64
+
+def country_to_language(country):
     country_to_lang = {"Taiwan": "zh-tw",
                        "China": "zh-cn",
                        "France": "fr",
@@ -11,10 +13,8 @@ def translate_string_with_country(string, country):
                        "Spain": "es",
                        "Japan": "ja",
                        "Russia": "ru"}
-    translator = Translator()
     lang = country_to_lang.get(country, "en")
-    after = translator.translate(string, dest = lang).text
-    return after
+    return lang
 
 '''usage
 f = open("text.txt", "r")
@@ -31,7 +31,23 @@ ChangePassword = {"unknown" : "Change Password", "Taiwan" : "變更密碼", "Chi
 Upload = {"unknown" : "Upload Picture", "Taiwan" : "上傳圖片", "China" : "上载图像", "France" : "Uploader l'image", "Italy" : "Carica immagine", "South Korea" : "이메일", "Spain" : "Cargar imagen", "Japan" : "写真をアップロード", "Russia" : "Загрузить фото"}
 ChangeLanguage = {"unknown" : "Change Language", "Taiwan" : "改變語言", "China" : "上载图像", "France" : "Uploader l'image", "Italy" : "Carica immagine", "South Korea" : "이메일", "Spain" : "Cargar imagen", "Japan" : "写真をアップロード", "Russia" : "Загрузить фото"}
 
+def get_base64(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
 
+def set_background(png_file):
+    bin_str = get_base64(png_file)
+    page_bg_img = '''
+    <style>
+    .stApp {
+    background-image: url("data:image/png;base64,%s");
+    background-size: cover;
+    opacity: 0.8;
+    }
+    </style>
+    ''' % bin_str
+    st.markdown(page_bg_img, unsafe_allow_html=True)
 def set_sidebar()-> None:
     if 'country' not in st.session_state:
         st.session_state['country'] = 'unknown'
@@ -53,3 +69,4 @@ def set_sidebar()-> None:
             Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
         ])
         st_pages.hide_pages(["Another page"])
+    set_background('image/IMG_5338.jpg')
