@@ -20,10 +20,10 @@ def main() -> None:
             st.session_state["country"] = "Japan"
         case ":flag-tw: 繁體中文":
             st.session_state["country"] = "Taiwan"
-
+            
     if 'clanguage' in st.session_state:
         del st.session_state['clanguage']
         st.rerun()
-
+        
 if __name__ == "__main__":
     main()
