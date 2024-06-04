@@ -55,7 +55,7 @@ def get_ip_info(user_ip: str)-> dict:
     return r.json()
 
 def main()-> None:
-    if "country" in st.session_state:
+    if "country" not in st.session_state:
         st.session_state["country"] = "unknown"
     user_ip: str = get_forwarded_ip()
     user_ip_info: dict = get_ip_info(user_ip)
