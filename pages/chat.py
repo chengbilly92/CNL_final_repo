@@ -13,7 +13,7 @@ def main()-> None:
     try:
         con = sqlite3.Connection('user.db')
         cur: sqlite3.Cursor = con.cursor()
-        content: str = st.chat_input("Say something!!")
+        content: str = st.chat_input("")
         if content:
             cur.execute('INSERT INTO messages VALUES (?, ?, ?, ?)',(
                 st.session_state["login"],
