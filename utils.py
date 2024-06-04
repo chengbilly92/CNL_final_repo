@@ -1,4 +1,7 @@
+from PIL import Image
 import streamlit as st
+import os
+import random
 import st_pages
 from st_pages import Page
 from googletrans import Translator
@@ -30,6 +33,10 @@ LogOut = {"unknown" : "Log out", "Taiwan" : "登出", "China" : "注销", "Franc
 ChangePassword = {"unknown" : "Change Password", "Taiwan" : "變更密碼", "China" : "更改密码", "France" : "changer le mot de passe", "Italy" : "Cambia la password", "South Korea" : "접기", "Spain" : "Cambia la password", "Japan" : "パスワードを変更", "Russia" : "Сменить пароль"}
 Upload = {"unknown" : "Upload Picture", "Taiwan" : "上傳圖片", "China" : "上载图像", "France" : "Uploader l'image", "Italy" : "Carica immagine", "South Korea" : "이메일", "Spain" : "Cargar imagen", "Japan" : "写真をアップロード", "Russia" : "Загрузить фото"}
 import base64
+@st.cache_data
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
@@ -66,4 +73,12 @@ def set_sidebar()-> None:
             Page('pages/login.py', LogIn[st.session_state.country]),
         ])
         st_pages.hide_pages(["Another page"])
-    set_background('image/IMG_5338.jpg')
+    newPath = "./image/{}".format(st.session_state["country"])
+    if not os.path.exists(newPath):
+        os.makedirs(newPath)
+    filePath = "./image/{}".format(st.session_state['country'])
+    files = os.listdir(filePath)
+    if len(files) != 0:
+        image_file = random.choice(files)
+        img = load_image(filePath+"/"+image_file)
+        set_background(img)

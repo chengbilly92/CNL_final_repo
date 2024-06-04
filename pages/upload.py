@@ -18,7 +18,7 @@ def main()-> None:
         st.switch_page('index.py')
     st.text("You've now logged in as {}., located in {}".format(st.session_state.login, st.session_state.country))
     st.title('Share your country with people!')
-    image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
+    image_file = st.file_uploader("Upload An Image",type=['png'])
     if image_file is not None:
         file_details = {"FileName":image_file.name,"FileType":image_file.type}
         st.write(file_details)
