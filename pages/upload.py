@@ -9,10 +9,6 @@ def load_image(image_file):
     return img
 def main()-> None:
     utils.set_sidebar()
-    if 'tologin' in st.session_state:
-        del st.session_state['tologin']
-        del st.session_state['login']
-        st.switch_page('index.py')
     st.text("{}{}., located in {}".format(utils.CurrentLogin[st.session_state.country], st.session_state.login, st.session_state.country))
     st.title(utils.Share[st.session_state.country])
     image_file = st.file_uploader("Upload An Image",type=['png'])

@@ -55,28 +55,22 @@ def get_ip_info(user_ip: str)-> dict:
     return r.json()
 
 def main()-> None:
-    utils.set_sidebar()
-    first_reload: bool = (st.session_state["country"] == "unknown")
+    if "country" not in st.session_state:
+        st.session_state["country"] = "unknown"
     user_ip: str = get_forwarded_ip()
     user_ip_info: dict = get_ip_info(user_ip)
-    # print(st.session_state)
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
     if st.session_state["country"] == "unknown":
         st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
     if st.session_state["country"] not in utils.support_country:
-        # print("uwu")
         st.session_state["country"] = "unknown"
-        st.session_state["country"] = "Italy"
     if 'login' in st.session_state: 
-        st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}.')
+        st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}')
     else:
-        st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest.')
-    if user_ip_info['status'] == "success":
-        st.write(f'Your country: {user_ip_info["country"]}')
+        st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest')
     st.text(f'{utils.IPfrom[st.session_state["country"]]} {user_ip}')
     st.session_state["language"] = utils.country_to_language(st.session_state["country"])
-    if first_reload and  st.session_state["country"] != "unknown":
-        st.rerun()
+    utils.set_sidebar(st.session_state["country"])
     newPath = "./image/{}".format(st.session_state["country"])
     if not os.path.exists(newPath):
         os.makedirs(newPath)
