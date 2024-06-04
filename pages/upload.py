@@ -13,8 +13,8 @@ def main()-> None:
         del st.session_state['tologin']
         del st.session_state['login']
         st.switch_page('index.py')
-    st.text("You've now logged in as {}., located in {}".format(st.session_state.login, st.session_state.country))
-    st.title('Share your country with people!')
+    st.text("{}{}., located in {}".format(utils.CurrentLogin[st.session_state.country], st.session_state.login, st.session_state.country))
+    st.title(utils.Share[st.session_state.country])
     image_file = st.file_uploader("Upload An Image",type=['png'])
     if image_file is not None:
         file_details = {"FileName":image_file.name,"FileType":image_file.type}

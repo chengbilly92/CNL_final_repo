@@ -50,8 +50,8 @@ def main()-> None:
         del st.session_state['tologin']
         del st.session_state['login']
         st.switch_page('index.py')
-    st.text("You've now logged in as {}.".format(st.session_state.login))
-    st.title('Change Password')
+    st.text("{}{}.".format(utils.CurrentLogin[st.session_state['country']], st.session_state.login))
+    st.title(utils.ChangePassword[st.session_state['country']])
     oldPassword = st.text_input("Old Password", type="password")
     password = st.text_input("New Password", type="password")
 
