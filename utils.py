@@ -1,8 +1,6 @@
-from PIL import Image
 import streamlit as st
 import st_pages
 from st_pages import Page
-import base64
 
 def country_to_language(country):
     country_to_lang = {"Taiwan": "zh-tw",
@@ -40,26 +38,27 @@ CurrentLogin = {'unknown' : 'You\'ve now logged in as ', 'Taiwan' : '目前登�
 Share = {'unknown' : 'Share your country with people!', 'Taiwan' : '向世界分享你的家鄉!', 'China' : '向世界分享你的家！', 'France' : 'Partagez votre pays avec les gens!', 'Italy' : 'Condividi il tuo paese con le persone!', 'South Korea' : '바토스레 구역!', 'Spain' : 'Comparte tu pais con las personas!', 'Japan' : '世界を共有しましょう！', 'Russia' : 'Сделайте свой город с людьми!'}
 
 
-def set_sidebar()-> None:
+def set_sidebar(country: str = None)-> None:
     if 'country' not in st.session_state:
         st.session_state['country'] = 'unknown'
+    if not country:
+        country = st.session_state['country']
     if 'login' in st.session_state: 
-        # print(Home[st.session_state.country])
         st_pages.show_pages([
-            Page('index.py', Home[st.session_state.country]),
-            Page('pages/chat.py', Chat[st.session_state.country]),
-            Page('pages/logout.py', LogOut[st.session_state.country]),
-            Page('pages/changePassword.py', ChangePassword[st.session_state.country]),
-            Page('pages/upload.py', Upload[st.session_state.country]),
-            Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
+            Page('index.py', Home[country]),
+            Page('pages/chat.py', Chat[country]),
+            Page('pages/logout.py', LogOut[country]),
+            Page('pages/changePassword.py', ChangePassword[country]),
+            Page('pages/upload.py', Upload[country]),
+            Page('pages/changeLanguage.py', ChangeLanguage[country])
         ])
         st_pages.hide_pages(["Another page"])
     else:
         st_pages.show_pages([
-            Page('index.py', Home[st.session_state.country]),
-            Page('pages/register.py', SignUp[st.session_state.country]),
-            Page('pages/login.py', LogIn[st.session_state.country]),
-            Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
+            Page('index.py', Home[country]),
+            Page('pages/register.py', SignUp[country]),
+            Page('pages/login.py', LogIn[country]),
+            Page('pages/changeLanguage.py', ChangeLanguage[country])
         ])
         st_pages.hide_pages(["Another page"])
     

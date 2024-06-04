@@ -59,12 +59,10 @@ def main()-> None:
     first_reload: bool = (st.session_state["country"] == "unknown")
     user_ip: str = get_forwarded_ip()
     user_ip_info: dict = get_ip_info(user_ip)
-    # print(st.session_state)
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
     if st.session_state["country"] == "unknown":
         st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
     if st.session_state["country"] not in utils.support_country:
-        # print("uwu")
         st.session_state["country"] = "unknown"
     if 'login' in st.session_state: 
         st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}')
@@ -72,7 +70,7 @@ def main()-> None:
         st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest')
     st.text(f'{utils.IPfrom[st.session_state["country"]]} {user_ip}')
     st.session_state["language"] = utils.country_to_language(st.session_state["country"])
-    utils.set_sidebar()
+    utils.set_sidebar(st.session_state["country"])
     newPath = "./image/{}".format(st.session_state["country"])
     if not os.path.exists(newPath):
         os.makedirs(newPath)
