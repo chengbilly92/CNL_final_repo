@@ -3,9 +3,13 @@ import sqlite3
 import traceback
 from datetime import datetime
 import utils
+from googletrans import Translator
 
 def main()-> None:
     utils.set_sidebar()
+    language = 'en'
+    translator = Translator()
+    message = str()
     try:
         con = sqlite3.Connection('user.db')
         cur: sqlite3.Cursor = con.cursor()
@@ -22,7 +26,8 @@ def main()-> None:
         
         res: list[tuple] = cur.execute('SELECT * FROM messages;')
         for m in res:
-            st.text(f'{m[0]}({m[1]}): {m[2]}')
+            message += f'{m[0]}({m[1]}): {translator.translate(m[2], dest=language).text}\n'
+        st.text(message)
     except:
         traceback.print_exc()
         st.error("Internal Server Error.")
