@@ -18,7 +18,9 @@ def main() -> None:
         case ":flag-tw: 繁體中文":
             st.session_state["country"] = "Taiwan"
 
-    st.switch_page('index.py')
+    # st.switch_page('index.py')
+    # st.rerun()
+    utils.set_sidebar()
 
 if __name__ == "__main__":
     main()

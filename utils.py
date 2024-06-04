@@ -1,7 +1,5 @@
 from PIL import Image
 import streamlit as st
-import os
-import random
 import st_pages
 from st_pages import Page
 import base64
@@ -42,29 +40,6 @@ CurrentLogin = {'unknown' : 'You\'ve now logged in as ', 'Taiwan' : '目前登�
 Share = {'unknown' : 'Share your country with people!', 'Taiwan' : '向世界分享你的家鄉!', 'China' : '向世界分享你的家！', 'France' : 'Partagez votre pays avec les gens!', 'Italy' : 'Condividi il tuo paese con le persone!', 'South Korea' : '바토스레 구역!', 'Spain' : 'Comparte tu pais con las personas!', 'Japan' : '世界を共有しましょう！', 'Russia' : 'Сделайте свой город с людьми!'}
 
 
-import base64
-@st.cache_data
-def load_image(image_file):
-    img = Image.open(image_file)
-    return img
-
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = '''
-    <style>
-    .stApp {
-    background-image: url("data:image/png;base64,%s");
-    background-size: cover;
-    opacity: 0.8;
-    }
-    </style>
-    ''' % bin_str
-    st.markdown(page_bg_img, unsafe_allow_html=True)
 def set_sidebar()-> None:
     if 'country' not in st.session_state:
         st.session_state['country'] = 'unknown'
@@ -87,13 +62,4 @@ def set_sidebar()-> None:
             Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
         ])
         st_pages.hide_pages(["Another page"])
-    newPath = "./image/{}".format(st.session_state["country"])
-    if not os.path.exists(newPath):
-        os.makedirs(newPath)
-    filePath = "./image/{}".format(st.session_state['country'])
-    files = os.listdir(filePath)
-    if len(files) != 0:
-        image_file = random.choice(files)
-        # img = load_image(filePath+"/"+image_file)
-        # print("uwu", img, "owo", image_file)
-        set_background(filePath+"/"+image_file)
+    
