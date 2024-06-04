@@ -70,12 +70,9 @@ def main()-> None:
         st.title(f'{utils.Hello[st.session_state["country"]]}:\t{st.session_state["login"]}')
     else:
         st.title(f'{utils.Hello[st.session_state["country"]]}:\tGuest')
-    # if user_ip_info['status'] == "success":
-    #     st.write(f'Your country: {user_ip_info["country"]}')
     st.text(f'{utils.IPfrom[st.session_state["country"]]} {user_ip}')
     st.session_state["language"] = utils.country_to_language(st.session_state["country"])
-    if first_reload and  st.session_state["country"] != "unknown":
-        st.rerun()
+    utils.set_sidebar()
     newPath = "./image/{}".format(st.session_state["country"])
     if not os.path.exists(newPath):
         os.makedirs(newPath)
