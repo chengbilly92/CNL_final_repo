@@ -33,8 +33,6 @@ def main()-> None:
         if submited:
             try:
                 con = sqlite3.Connection('user.db')
-                if not username or not password:
-                    return
                 cur: sqlite3.Cursor = con.cursor()
                 cur.execute('INSERT INTO users(username, password) VALUES (?, ?);', (username, password,))
                 con.commit()
