@@ -10,14 +10,15 @@ def main() -> None:
     ])
     match language:
         case "auto":
-            st.session_state['man_language'] = "unknown"
+            st.session_state["country"] = "unknown"
         case ":flag-us: English":
-            st.session_state['man_language'] = "unknown"
+            st.session_state["country"] = "unknown"
         case ":flag-jp: 日本語":
-            st.session_state['man_language'] = "Japan"
+            st.session_state["country"] = "Japan"
         case ":flag-tw: 繁體中文":
-            st.session_state['man_language'] = "Taiwan"
+            st.session_state["country"] = "Taiwan"
 
+    st.switch_page('index.py')
 
 if __name__ == "__main__":
     main()
