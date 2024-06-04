@@ -1,9 +1,18 @@
 import streamlit as st
 from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
+from streamlit.runtime.state import session_state
 from streamlit.web.server.websocket_headers import _get_websocket_headers
 import requests
 import utils
+from PIL import Image
+import os
+import random
+
+@st.cache_data
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
 
 def get_remote_ip() -> str:
     ctx = get_script_run_ctx()
@@ -32,13 +41,26 @@ def main()-> None:
         st.title(f'Hello:\t{st.session_state["login"]}.')
     else:
         st.title(f'Hello:\tGuest.')
-
     user_ip: str = get_forwarded_ip()
     st.text(f'Your ip address: {user_ip}')
     user_ip_info: dict = get_ip_info(user_ip)
+    print(user_ip_info['status'])
     if user_ip_info['status'] == "success":
         st.write(f'Your country: {user_ip_info["country"]}')
     st.session_state['userip'] = "localhost" if user_ip_info['status'] == "fail" else user_ip
+    st.session_state["country"] = "unknown" if user_ip_info['status'] == "fail" else user_ip_info["country"]
+    newPath = "./image/{}".format(st.session_state["country"])
+    if not os.path.exists(newPath):
+        os.makedirs(newPath)
+    filePath = "./image/{}".format(st.session_state['country'])
+    files = os.listdir(filePath)
+    if len(files) == 0:
+        st.text("No images for your country.")
+    else:
+        image_file = random.choice(files)
+        img = load_image(filePath+"/"+image_file)
+        st.image(img)
+
 
 if __name__ == "__main__":
     main()
