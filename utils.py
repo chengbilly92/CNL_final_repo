@@ -5,7 +5,9 @@ import random
 import st_pages
 from st_pages import Page
 from googletrans import Translator
-def translate_string_with_country(string, country):
+import base64
+
+def country_to_language(country):
     country_to_lang = {"Taiwan": "zh-tw",
                        "China": "zh-cn",
                        "France": "fr",
@@ -14,10 +16,8 @@ def translate_string_with_country(string, country):
                        "Spain": "es",
                        "Japan": "ja",
                        "Russia": "ru"}
-    translator = Translator()
     lang = country_to_lang.get(country, "en")
-    after = translator.translate(string, dest = lang).text
-    return after
+    return lang
 
 '''usage
 f = open("text.txt", "r")
@@ -32,11 +32,13 @@ LogIn = {"unknown" : "Log in", "Taiwan" : "登入", "China" : "登录", "France"
 LogOut = {"unknown" : "Log out", "Taiwan" : "登出", "China" : "注销", "France" : "Deconnexion", "Italy" : "Disconnessione", "South Korea" : "로그인", "Spain" : "Desconectar", "Japan" : "ログアウト", "Russia" : "Выход"}
 ChangePassword = {"unknown" : "Change Password", "Taiwan" : "變更密碼", "China" : "更改密码", "France" : "changer le mot de passe", "Italy" : "Cambia la password", "South Korea" : "접기", "Spain" : "Cambia la password", "Japan" : "パスワードを変更", "Russia" : "Сменить пароль"}
 Upload = {"unknown" : "Upload Picture", "Taiwan" : "上傳圖片", "China" : "上载图像", "France" : "Uploader l'image", "Italy" : "Carica immagine", "South Korea" : "이메일", "Spain" : "Cargar imagen", "Japan" : "写真をアップロード", "Russia" : "Загрузить фото"}
+
 import base64
 @st.cache_data
 def load_image(image_file):
     img = Image.open(image_file)
     return img
+
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
@@ -64,6 +66,7 @@ def set_sidebar()-> None:
             Page('pages/logout.py', LogOut[st.session_state.country]),
             Page('pages/changePassword.py', ChangePassword[st.session_state.country]),
             Page('pages/upload.py', Upload[st.session_state.country]),
+            Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
         ])
         st_pages.hide_pages(["Another page"])
     else:
@@ -71,6 +74,7 @@ def set_sidebar()-> None:
             Page('index.py', Home[st.session_state.country]),
             Page('pages/register.py', SignUp[st.session_state.country]),
             Page('pages/login.py', LogIn[st.session_state.country]),
+            Page('pages/changeLanguage.py', ChangeLanguage[st.session_state.country])
         ])
         st_pages.hide_pages(["Another page"])
     newPath = "./image/{}".format(st.session_state["country"])
